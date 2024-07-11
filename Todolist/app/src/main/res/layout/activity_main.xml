@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <ListView
+        android:id="@+id/listViewTasks"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/textView"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="80dp"
+        android:paddingStart="5dp"
+        android:paddingTop="10dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:text="Todolists"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="350dp"
+        android:layout_marginTop="850dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        app:srcCompat="@android:drawable/ic_menu_add" />
+
+</RelativeLayout>
