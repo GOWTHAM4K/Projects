@@ -3,28 +3,23 @@ package com.example.todolist;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.icu.text.Transliterator;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import android.widget.CheckedTextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,26 +29,23 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private static final int req_code = 10;
     private SQLiteDatabase db;
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
         floatingActionButton = findViewById(R.id.floatingActionButton);
         listView = findViewById(R.id.listViewTasks);
 
-        db=openOrCreateDatabase("Database", Context.MODE_PRIVATE,null);
-
-
-
+        db = openOrCreateDatabase("TasksDB", Context.MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS tasks(id INTEGER PRIMARY KEY AUTOINCREMENT, task TEXT)");
 
         arrayList = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, arrayList);
-        listView.setAdapter(adapter);
+        loadTasksFromDatabase();
 
+        adapter = new ArrayAdapter<>(this, R.layout.item_list, R.id.checkBox, arrayList);
+        listView.setAdapter(adapter);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,10 +61,10 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
                 alert.setTitle("Delete Task");
                 alert.setMessage("Are you sure you want to delete this Task?");
-                alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String delete= "delete from "+
+                        deleteTaskFromDatabase(arrayList.get(position));
                         arrayList.remove(position);
                         adapter.notifyDataSetChanged();
                     }
@@ -90,21 +82,12 @@ public class MainActivity extends AppCompatActivity {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
-                CheckedTextView checkedTextView = (CheckedTextView) view;
-                checkedTextView.toggle();
-                Toast.makeText(MainActivity.this,"The Item is Checked",Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                CheckBox checkBox = view.findViewById(R.id.checkBox);
+                checkBox.toggle();
             }
         });
-
-
-
-
-
-
-
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -114,7 +97,27 @@ public class MainActivity extends AppCompatActivity {
             if (message != null && !message.isEmpty()) {
                 arrayList.add(message);
                 adapter.notifyDataSetChanged();
+                insertTaskIntoDatabase(message);
             }
         }
+    }
+
+    private void loadTasksFromDatabase() {
+        Cursor cursor = db.rawQuery("SELECT * FROM tasks", null);
+        if (cursor.moveToFirst()) {
+            do {
+                String task = cursor.getString(1);
+                arrayList.add(task);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+    }
+
+    private void insertTaskIntoDatabase(String task) {
+        db.execSQL("INSERT INTO tasks(task) VALUES(?)", new String[]{task});
+    }
+
+    private void deleteTaskFromDatabase(String task) {
+        db.execSQL("DELETE FROM tasks WHERE task=?", new String[]{task});
     }
 }
