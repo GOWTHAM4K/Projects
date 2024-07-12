@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EACFEF"
     tools:context=".MainActivity">
 
 
@@ -12,22 +13,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/textView"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:choiceMode="multipleChoice"
         android:paddingStart="5dp"
-        android:paddingTop="10dp"
-        android:choiceMode="multipleChoice">
-    </ListView>
+        android:paddingTop="10dp"></ListView>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
+        android:background="#E9DCFE"
+        android:backgroundTint="#C4ABED"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="30dp"
         android:text="Todolists"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+        android:textColor="#582062"
+        android:textSize="50sp"
+        android:textStyle="bold|italic" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
@@ -37,6 +41,7 @@
         android:layout_marginTop="750dp"
         android:layout_marginBottom="32dp"
         android:clickable="true"
+        app:backgroundTint="#C3AAEC"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
 </RelativeLayout>
