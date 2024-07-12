@@ -1,7 +1,9 @@
 package com.example.todolist;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.icu.text.Transliterator;
 import android.os.Bundle;
 import android.text.Layout;
@@ -31,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> arrayList;
     private ArrayAdapter<String> adapter;
     private static final int req_code = 10;
-    private Layout layout;
+    private SQLiteDatabase db;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
         floatingActionButton = findViewById(R.id.floatingActionButton);
         listView = findViewById(R.id.listViewTasks);
+
+        db=openOrCreateDatabase("Database", Context.MODE_PRIVATE,null);
+
 
 
 
@@ -66,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 alert.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        String delete= "delete from "+
                         arrayList.remove(position);
                         adapter.notifyDataSetChanged();
                     }
@@ -89,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,"The Item is Checked",Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
+
+
+
 
     }
 
