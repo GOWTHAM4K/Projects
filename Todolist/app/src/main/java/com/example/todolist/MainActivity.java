@@ -4,10 +4,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.Transliterator;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -20,6 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import android.widget.CheckedTextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> arrayList;
     private ArrayAdapter<String> adapter;
     private static final int req_code = 10;
+    private Layout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listViewTasks);
 
 
+
         arrayList = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, arrayList);
         listView.setAdapter(adapter);
 
 
@@ -73,6 +78,15 @@ public class MainActivity extends AppCompatActivity {
                 });
                 alert.create().show();
                 return true;
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
+                CheckedTextView checkedTextView = (CheckedTextView) view;
+                checkedTextView.toggle();
+                Toast.makeText(MainActivity.this,"The Item is Checked",Toast.LENGTH_SHORT).show();
             }
         });
 

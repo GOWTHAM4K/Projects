@@ -15,13 +15,15 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="80dp"
         android:paddingStart="5dp"
-        android:paddingTop="10dp" />
+        android:paddingTop="10dp"
+        android:choiceMode="multipleChoice">
+    </ListView>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:padding="10dp"
         android:text="Todolists"
         android:textSize="40sp"
@@ -32,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="350dp"
-        android:layout_marginTop="850dp"
+        android:layout_marginTop="750dp"
         android:layout_marginBottom="32dp"
         android:clickable="true"
         app:srcCompat="@android:drawable/ic_menu_add" />
