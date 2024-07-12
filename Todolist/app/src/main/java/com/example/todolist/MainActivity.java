@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         arrayList = new ArrayList<>();
         loadTasksFromDatabase();
 
-        adapter = new ArrayAdapter<>(this, R.layout.item_list, R.id.checkBox, arrayList);
+        adapter = new ArrayAdapter<>(this, R.layout.item_list, R.id.textViewTask, arrayList);
         listView.setAdapter(adapter);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
