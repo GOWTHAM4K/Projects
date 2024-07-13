@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         addfav=findViewById(R.id.addfav);
 
         db=openOrCreateDatabase("Quotes", Context.MODE_PRIVATE,null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS quote(id INTEGER PRIMARY KEY AUTOINCREMENT, quotes varchar(30))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS quote(id INTEGER PRIMARY KEY AUTOINCREMENT, quotes TEXT)");
 
         insertquote("I believe that we are fundamentally the same and have the same basic potential.");
         insertquote("Love is the master key that opens the gates of happiness.");
@@ -47,6 +47,16 @@ public class MainActivity extends AppCompatActivity {
         insertquote("What worries you masters you.");
         insertquote("Wherever a man turns he can find someone who needs him.");
         insertquote("The truth is not for all men, but only for those who seek it.");
+        insertquote("The world needs dreamers and the world needs doers. But above all, the world needs dreamers who do.");
+        insertquote("Happiness is enhanced by others, but does not depend upon others.");
+        insertquote("Decide on what you think is right, and stick to it.");
+        insertquote("We have been taught to believe that negative equals realistic and positive equals unrealistic.");
+        insertquote("The best proof of love is trust.");
+        insertquote("Most true happiness comes from one's inner life, from the disposition of the mind and soul. Admittedly, a good inner life is hard to achieve, especially in these trying times. It takes reflection and contemplation and self-discipline.");
+        insertquote("When you get right down to the root of the meaning of the word 'succeed,' you find that it simply means to follow through.");
+        insertquote("Happiness comes when you least expect it and rarely when you try to make it happen.");
+        insertquote("Your incredible brain can take you from rags to riches, from loneliness to popularity and from depression to happiness and joy if you use it properly.");
+
 
         Cursor cursor = db.rawQuery("SELECT quotes FROM quote ORDER BY RANDOM() LIMIT 1", null);
         if (cursor.moveToFirst()) {
@@ -62,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         refreshbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Cursor cursor = db.rawQuery("SELECT quotes FROM quote ORDER BY RANDOM() LIMIT 1", null);
+                Cursor cursor = db.rawQuery("SELECT quotes FROM quote ORDER BY RANDOM()", null);
                 if (cursor.moveToFirst()) {
                     do {
                         String quotestr1 = cursor.getString(0);
